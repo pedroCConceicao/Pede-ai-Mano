@@ -1,15 +1,44 @@
-#Desenvolva o Pede aí, mano em codigo
-
-#imports
 import time
 import os
 import qrcode
-Biblioteca Pillow para abrir a imagem
-#from PIL import Image
+import mysql.connector
+
+conexao = mysql.connector.connect(
+    host='localhost',
+    user='root',
+    password='admin',
+    database='unamsdatabase'
+)
+
+
+cursor = conexao.cursor()
+
+# Listas para armazenar os dados
+produtosH = []
+precoH = []
+
+produtosP = []
+precoP = []
+
+# Consultar tabela de Hambúrguer
+cursor.execute("SELECT nome, preco FROM produtosham")
+for nome, preco in cursor.fetchall():
+    produtosH.append(nome)
+    precoH.append(float(preco))
+
+# Consultar tabela de Pizza
+cursor.execute("SELECT nome, preco FROM produtospiz")
+for nome, preco in cursor.fetchall():
+    produtosP.append(nome)
+    precoP.append(float(preco))
+
+# Fechar conexão
+cursor.close()
+conexao.close()
 
 #Produtos Hamburguer
-produtosH = ['X-Bacon','Bacon Especial','X-Salada']
-precoH = [18.90, 22.50, 16.00]
+produtosH = []
+precoH = []
 
 #Produtos Pizza
 produtosP = ['Pizza Calabresa', 'Frango Catupiry', 'Pizza Doce'] 
